@@ -9,17 +9,23 @@ const apiKey = "H8NZZaBE8yYMcA5d";
 
 router.get("/comics", async (req, res) => {
   const { limit = 100, title, page = 1 } = req.query;
-  queryTitle = title && "&title" + title;
+  queryTitle = title && "&title=" + title;
 
-  const query = `?apiKey=${apiKey}&limit=${limit}&skip=${limit * (page - 1)}
-  ${queryTitle}`;
+  const query = `?apiKey=${apiKey}&limit=${limit}&skip=${limit * (page - 1)}`;
+  
   console.log(query);
   try {
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comics/${query}`
+      `https://lereacteur-marvel-api.herokuapp.com/comics${query}`
     );
+
+    // Sorting the result
+    //const tmp = response.data.comics.sort((a, b) => {
+    //  return a.name.toLowerCase() - b.name.toLowerCase();
+    //});
+    //response.data.comics = tmp;
     res.status(200).json(response.data);
-    console.log(response.data);
+    // console.log(response.data);
   } catch (error) {}
 
   res.status(200).json(response.data);
