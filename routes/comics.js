@@ -11,8 +11,8 @@ router.get("/comics", async (req, res) => {
   const { limit = 100, title, page = 1 } = req.query;
   queryTitle = title && "&title=" + title;
 
-  const query = `?apiKey=${apiKey}&limit=${limit}&skip=${limit * (page - 1)}`;
-  
+
+  const query = `?apiKey=${apiKey}&limit=${limit}&skip=${limit * (page - 1)}${queryTitle}`;
   console.log(query);
   try {
     const response = await axios.get(

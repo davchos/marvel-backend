@@ -44,8 +44,10 @@ const firstConnection = async () => {
 // Doc
 const comicsRoutes = require("./routes/comics");
 const charactersRoutes = require("./routes/characters");
+const favorisRoutes = require("./routes/favoris");
 app.use(comicsRoutes);
 app.use(charactersRoutes);
+app.use(favorisRoutes);
 
 // All routes
 
