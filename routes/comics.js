@@ -3,16 +3,15 @@ const router = express.Router();
 const axios = require("axios");
 const { response } = require("express");
 
-const apiKey = "H8NZZaBE8yYMcA5d";
-
-// const isAuthenticated = require("../middlewares/isAuthenticated");
+const apiKey = process.env.REACTEUR_KEY;
 
 router.get("/comics", async (req, res) => {
   const { limit = 100, title, page = 1 } = req.query;
   queryTitle = title && "&title=" + title;
 
-
-  const query = `?apiKey=${apiKey}&limit=${limit}&skip=${limit * (page - 1)}${queryTitle}`;
+  const query = `?apiKey=${apiKey}&limit=${limit}&skip=${
+    limit * (page - 1)
+  }${queryTitle}`;
   console.log(query);
   try {
     const response = await axios.get(
@@ -20,15 +19,17 @@ router.get("/comics", async (req, res) => {
     );
 
     // Sorting the result
-    //const tmp = response.data.comics.sort((a, b) => {
-    //  return a.name.toLowerCase() - b.name.toLowerCase();
-    //});
-    //response.data.comics = tmp;
+    const tmp = response.data.comics.sort((a, b) => {
+      return a.name.toLowerCase() - b.name.toLowerCase();
+    });
+    response.data.comics = tmp;
     res.status(200).json(response.data);
     // console.log(response.data);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 
-  res.status(200).json(response.data);
+  // res.status(200).json(response.data);
 });
 
 router.get("/comics/:id", async (req, res) => {
