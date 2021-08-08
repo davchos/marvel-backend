@@ -19,8 +19,9 @@ router.get("/comics", async (req, res) => {
     );
 
     // Sorting the result
+
     const tmp = response.data.results.sort((a, b) => {
-      return a.name.toLowerCase() - b.name.toLowerCase();
+      return a.title.toLowerCase() - b.title.toLowerCase();
     });
     response.data.comics = tmp;
     res.status(200).json(response.data);
